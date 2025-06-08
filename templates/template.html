@@ -88,71 +88,46 @@
                             <tr>
                                 <th class="sortable" data-sort="code">股票代码</th>
                                 <th class="sortable" data-sort="name">股票名称</th>
-                                <th class="sortable" data-sort="announce_date">公告日</th>
-                                <th class="sortable" data-sort="next_day">次日</th>
-                                <th class="sortable" data-sort="change">涨幅(%)</th>
                                 <th class="sortable mobile-hidden" data-sort="market_cap">市值(亿)</th>
                                 <th class="sortable" data-sort="roe">ROE(%)</th>
                                 <th class="sortable mobile-hidden" data-sort="net_profit">扣非净利润(亿)</th>
                                 <th class="sortable mobile-hidden" data-sort="gross_margin">毛利率(%)</th>
                                 <th class="sortable" data-sort="pe">市盈率</th>
                                 <th class="sortable" data-sort="pb">市净率</th>
-                                <th class="sortable" data-sort="total_change">至今涨幅(%)</th>
+                                <th class="sortable" data-sort="change">涨跌幅(%)</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr data-code="002098.XSHE" data-market_cap="39.13" data-roe="15.01" data-net_profit="2.37" data-gross_margin="0" data-pe="-11.05" data-pb="0" data-change="9.97" data-total_change="0">
-                                <td>002098.XSHE</td>
-                                <td>浔兴股份</td>
-                                <td>2025-04-26</td>
-                                <td>2025-04-28</td>
-                                <td class="positive">9.97</td>
-                                <td class="mobile-hidden">39.13</td>
-                                <td class="positive">15.01</td>
-                                <td class="mobile-hidden">2.37</td>
-                                <td class="mobile-hidden">-</td>
-                                <td class="negative">-11.05</td>
-                                <td>-</td>
-                                <td class="negative">-</td>
+                            {% for stock in stocks %}
+                            <tr data-code="{{ stock.code }}"
+                                data-market_cap="{{ stock.market_cap }}"
+                                data-roe="{{ stock.roe }}"
+                                data-net_profit="{{ stock.net_profit }}"
+                                data-gross_margin="{{ stock.gross_margin }}"
+                                data-pe="{{ stock.pe }}"
+                                data-pb="{{ stock.pb }}"
+                                data-change="{{ stock.change }}">
+                                <td>{{ stock.code }}</td>
+                                <td>{{ stock.name }}</td>
+                                <td class="mobile-hidden">{{ "%.2f"|format(stock.market_cap) }}</td>
+                                <td class="{{ 'positive' if stock.roe > 0 else 'negative' }}">{{ "%.2f"|format(stock.roe) }}</td>
+                                <td class="mobile-hidden">{{ "%.2f"|format(stock.net_profit) }}</td>
+                                <td class="mobile-hidden">{{ "%.2f"|format(stock.gross_margin) if stock.gross_margin is not none else '-' }}</td>
+                                <td>{{ "%.2f"|format(stock.pe) if stock.pe is not none else '-' }}</td>
+                                <td>{{ "%.2f"|format(stock.pb) if stock.pb is not none else '-' }}</td>
+                                <td class="{{ 'positive' if stock.change > 0 else 'negative' }}">{{ "%.2f"|format(stock.change) }}</td>
                             </tr>
-                            <tr data-code="600828.XSHG" data-market_cap="-77.54" data-roe="-999.7" data-net_profit="0.99" data-gross_margin="0" data-pe="-7.82" data-pb="0" data-change="10.11" data-total_change="0">
-                                <td>600828.XSHG</td>
-                                <td>茂业商业</td>
-                                <td>2025-04-28</td>
-                                <td>2025-04-28</td>
-                                <td class="positive">10.11</td>
-                                <td class="mobile-hidden">-77.54</td>
-                                <td class="negative">-999.70</td>
-                                <td class="mobile-hidden">0.99</td>
-                                <td class="mobile-hidden">-</td>
-                                <td class="negative">-7.82</td>
-                                <td>-</td>
-                                <td class="negative">-</td>
-                            </tr>
-                            <tr data-code="300718.XSHE" data-market_cap="2.64" data-roe="90.93" data-net_profit="12.6" data-gross_margin="0" data-pe="-4.54" data-pb="0" data-change="12.58" data-total_change="0">
-                                <td>300718.XSHE</td>
-                                <td>长盛轴承</td>
-                                <td>2025-04-23</td>
-                                <td>2025-04-23</td>
-                                <td class="positive">12.58</td>
-                                <td class="mobile-hidden">2.64</td>
-                                <td class="positive">90.93</td>
-                                <td class="mobile-hidden">12.60</td>
-                                <td class="mobile-hidden">-</td>
-                                <td class="negative">-4.54</td>
-                                <td>-</td>
-                                <td class="negative">-</td>
-                            </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
 
                 <!-- 分页 -->
                 <div class="d-flex justify-content-between align-items-center mt-3">
-                    <div class="text-muted" id="resultCount">共 3 条数据</div>
+                    <div class="text-muted" id="resultCount">共 {{ stocks|length }} 条数据</div>
                     <nav>
                         <ul class="pagination pagination-sm" id="pagination">
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <!-- 分页将通过JS动态生成 -->
                         </ul>
                     </nav>
                 </div>
