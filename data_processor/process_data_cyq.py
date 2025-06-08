@@ -229,11 +229,15 @@ def save_html(df_sorted):
 def fetch_data():
     return {"timestamp": datetime.datetime.isoformat(), "value": 42}
 
-def git_push():
-    subprocess.run(["git", "add","."])
-    subprocess.run(["git", "commit","-m","Auto data update"])
-    subprocess.run(["git", "push"])
 
+
+def git_push():
+    try:
+        subprocess.run(["git", "add", "."], check=True)
+        subprocess.run(["git", "commit", "-m", "Auto data update"], check=True)
+        subprocess.run(["git", "push"], check=True)
+    except subprocess.CalledProcessError:
+        sys.exit("❌ Git操作失败")
 
 # 2. 克隆GitHub仓库（需提前安装Git）
 def update_github():
@@ -254,7 +258,7 @@ def update_github():
 
 if __name__ == '__main__':
     # schedule.every(0.1).minutes.do(trace)
-    schedule.every().day.at("01:25").do(daily_task)
+    schedule.every().day.at("01:29").do(daily_task)
     # schedule.every().day.at("13:05").do(daily_task)
     # daily_task()
     while True:
