@@ -66,7 +66,7 @@ def get_previous_trading_day(current_date: datetime.date) -> datetime.date:
     """获取前一个交易日"""
     # 这里需要实现获取真实交易日的逻辑
     # 简化版：如果是周一，返回上周五，否则返回前一天
-    return current_date - datetime.timedelta(days=3)
+    return current_date - datetime.timedelta(days=2)
 
 
 def get_redis_data(target_date: datetime.date) -> Optional[Dict[str, Any]]:
