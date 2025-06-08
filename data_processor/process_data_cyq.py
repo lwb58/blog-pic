@@ -244,9 +244,9 @@ def update_github():
 
 if __name__ == '__main__':
     # schedule.every(0.1).minutes.do(trace)
-    # schedule.every().day.at("18:08").do(daily_task)
+    schedule.every().day.at("09:28").do(daily_task)
     # schedule.every().day.at("13:05").do(daily_task)
-    daily_task()
-    # while True:
-    #     schedule.run_pending()
-    #     time.sleep(30)
+    # daily_task()
+    while True:
+        schedule.run_pending()
+        time.sleep(30)
