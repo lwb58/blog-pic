@@ -1,0 +1,22 @@
+/* 增强DataFrame表格显示 */
+.dataframe {
+    width: 100%;
+    margin: 20px 0;
+    border-collapse: collapse;
+}
+
+.dataframe th {
+    background-color: #f8f9fa;
+    position: sticky;
+    top: 0;
+    cursor: pointer; /* 可点击排序 */
+}
+
+.dataframe td, .dataframe th {
+    padding: 8px 12px;
+    border: 1px solid #dee2e6;
+}
+
+.dataframe tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
