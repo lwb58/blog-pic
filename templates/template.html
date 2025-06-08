@@ -99,7 +99,7 @@
                         </thead>
                         <tbody>
                             {% for stock in stocks %}
-                            <tr data-code="{{ stock.code }}"
+                            <tr data-code="{{ stock.co }}"
                                 data-market_cap="{{ stock.market_cap }}"
                                 data-roe="{{ stock.roe }}"
                                 data-net_profit="{{ stock.net_profit }}"
@@ -107,8 +107,8 @@
                                 data-pe="{{ stock.pe }}"
                                 data-pb="{{ stock.pb }}"
                                 data-change="{{ stock.change }}">
-                                <td>{{ stock.code }}</td>
-                                <td>{{ stock.name }}</td>
+                                <td>{{ stock.co }}</td>
+                                <td>{{ stock.na }}</td>
                                 <td class="mobile-hidden">{{ "%.2f"|format(stock.market_cap) }}</td>
                                 <td class="{{ 'positive' if stock.roe > 0 else 'negative' }}">{{ "%.2f"|format(stock.roe) }}</td>
                                 <td class="mobile-hidden">{{ "%.2f"|format(stock.net_profit) }}</td>

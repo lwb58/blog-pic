@@ -180,26 +180,43 @@ def df_to_html(df: pd.DataFrame) -> str:
     )
 
 
+def prepare_data(df):
+    # 字段重命名（英文名需与模板完全一致）
+    df = df.rename(columns={
+        'na': 'na',  # 股票名称
+        'co': 'co',  # 股票代码
+        '市值': 'market_cap',
+        'ROE': 'roe',
+        '扣非归母净利润': 'net_profit',
+        '毛利率': 'gross_margin',
+        '市盈率(pe)': 'pe',
+        '市净率(pb)': 'pb',
+        '涨幅': 'change'
+    })
+    df = df.reset_index().rename(columns={'index': 'co'})
+    # 确保数值字段为float类型
+    numeric_cols = ['market_cap', 'roe', 'net_profit', 'gross_margin', 'pe', 'pb', 'change']
+    df[numeric_cols] = df[numeric_cols].astype(float)
+
+    return df
+
+
 def save_html(df_sorted):
     os.makedirs("../data", exist_ok=True)
     df_sorted.to_parquet("../data/latest.parquet")
     df_sorted.to_csv("../data/latest.csv")
 
-    """读取DataFrame并生成网页"""
-    df = pd.read_parquet("../data/latest.parquet")
+    df = prepare_data(df_sorted)
 
+    # 渲染模板
     env = Environment(loader=FileSystemLoader('../templates/'))
+    template = env.get_template('template.html')
 
-    template = env.get_template('template.js')
-
-    html = template.render(
-        update_time=pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S"),
-        table_html=df_to_html(df),
-        summary_stats=df.describe().to_html()
-    )
-
-    with open("../index.html", "w",encoding='utf-8') as f:
-        f.write(html)
+    with open("../index.html", "w", encoding='utf-8') as f:
+        f.write(template.render(
+            stocks=df.to_dict('records'),
+            update_time=pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S")
+        ))
     update_github()
 
 
@@ -220,7 +237,7 @@ def update_github():
     os.system("git pull origin main")  # 拉取最新代码
 
     # 提交到GitHub
-    os.system('git add data/latest.json')
+    os.system('git add index.html')
     os.system('git commit -m "Auto data update"')
     os.system('git push origin main')
 
