@@ -6,7 +6,7 @@
     <title>股票数据分析</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="./static/css/style.css">
+    <link rel="stylesheet" href="/static/css/style.css?v=20250608">
 </head>
 <body>
     <div class="container">
@@ -88,27 +88,71 @@
                             <tr>
                                 <th class="sortable" data-sort="code">股票代码</th>
                                 <th class="sortable" data-sort="name">股票名称</th>
+                                <th class="sortable" data-sort="announce_date">公告日</th>
+                                <th class="sortable" data-sort="next_day">次日</th>
+                                <th class="sortable" data-sort="change">涨幅(%)</th>
                                 <th class="sortable mobile-hidden" data-sort="market_cap">市值(亿)</th>
                                 <th class="sortable" data-sort="roe">ROE(%)</th>
                                 <th class="sortable mobile-hidden" data-sort="net_profit">扣非净利润(亿)</th>
                                 <th class="sortable mobile-hidden" data-sort="gross_margin">毛利率(%)</th>
                                 <th class="sortable" data-sort="pe">市盈率</th>
                                 <th class="sortable" data-sort="pb">市净率</th>
-                                <th class="sortable" data-sort="change">涨跌幅(%)</th>
+                                <th class="sortable" data-sort="total_change">至今涨幅(%)</th>
                             </tr>
                         </thead>
                         <tbody>
-                            
+                            <tr data-code="002098.XSHE" data-market_cap="39.13" data-roe="15.01" data-net_profit="2.37" data-gross_margin="0" data-pe="-11.05" data-pb="0" data-change="9.97" data-total_change="0">
+                                <td>002098.XSHE</td>
+                                <td>浔兴股份</td>
+                                <td>2025-04-26</td>
+                                <td>2025-04-28</td>
+                                <td class="positive">9.97</td>
+                                <td class="mobile-hidden">39.13</td>
+                                <td class="positive">15.01</td>
+                                <td class="mobile-hidden">2.37</td>
+                                <td class="mobile-hidden">-</td>
+                                <td class="negative">-11.05</td>
+                                <td>-</td>
+                                <td class="negative">-</td>
+                            </tr>
+                            <tr data-code="600828.XSHG" data-market_cap="-77.54" data-roe="-999.7" data-net_profit="0.99" data-gross_margin="0" data-pe="-7.82" data-pb="0" data-change="10.11" data-total_change="0">
+                                <td>600828.XSHG</td>
+                                <td>茂业商业</td>
+                                <td>2025-04-28</td>
+                                <td>2025-04-28</td>
+                                <td class="positive">10.11</td>
+                                <td class="mobile-hidden">-77.54</td>
+                                <td class="negative">-999.70</td>
+                                <td class="mobile-hidden">0.99</td>
+                                <td class="mobile-hidden">-</td>
+                                <td class="negative">-7.82</td>
+                                <td>-</td>
+                                <td class="negative">-</td>
+                            </tr>
+                            <tr data-code="300718.XSHE" data-market_cap="2.64" data-roe="90.93" data-net_profit="12.6" data-gross_margin="0" data-pe="-4.54" data-pb="0" data-change="12.58" data-total_change="0">
+                                <td>300718.XSHE</td>
+                                <td>长盛轴承</td>
+                                <td>2025-04-23</td>
+                                <td>2025-04-23</td>
+                                <td class="positive">12.58</td>
+                                <td class="mobile-hidden">2.64</td>
+                                <td class="positive">90.93</td>
+                                <td class="mobile-hidden">12.60</td>
+                                <td class="mobile-hidden">-</td>
+                                <td class="negative">-4.54</td>
+                                <td>-</td>
+                                <td class="negative">-</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
 
                 <!-- 分页 -->
                 <div class="d-flex justify-content-between align-items-center mt-3">
-                    <div class="text-muted" id="resultCount">共 0 条数据</div>
+                    <div class="text-muted" id="resultCount">共 3 条数据</div>
                     <nav>
                         <ul class="pagination pagination-sm" id="pagination">
-                            <!-- 分页将通过JS动态生成 -->
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -117,6 +161,6 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="./static/js/script.js"></script>
+        <script src="./static/js/script.js"></script>
 </body>
 </html>
