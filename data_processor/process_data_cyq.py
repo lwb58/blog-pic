@@ -235,7 +235,7 @@ def git_push():
     try:
         subprocess.run(["git", "add", "."], check=True)
         subprocess.run(["git", "commit", "-m", "Auto data update"], check=True)
-        subprocess.run(["git", "push"], check=True)
+        subprocess.run(["git", "push","--force","origin","main"], check=True,timeout=15)
     except subprocess.CalledProcessError:
         sys.exit("❌ Git操作失败")
 
@@ -258,7 +258,7 @@ def update_github():
 
 if __name__ == '__main__':
     # schedule.every(0.1).minutes.do(trace)
-    schedule.every().day.at("01:31").do(daily_task)
+    schedule.every().day.at("01:34").do(daily_task)
     # schedule.every().day.at("13:05").do(daily_task)
     # daily_task()
     while True:
