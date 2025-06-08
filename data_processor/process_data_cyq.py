@@ -12,6 +12,8 @@ import dataframe_image as dfi
 # 配置信息（建议从环境变量获取）
 from jinja2 import Template,Environment, FileSystemLoader
 import os
+import subprocess
+import threading
 # 业绩超预期数据获取
 
 REDIS_CONFIG = {
@@ -227,6 +229,11 @@ def save_html(df_sorted):
 def fetch_data():
     return {"timestamp": datetime.datetime.isoformat(), "value": 42}
 
+def git_push():
+    subprocess.run(["git", "add","."])
+    subprocess.run(["git", "commit","-m","Auto data update"])
+    subprocess.run(["git", "push"])
+
 
 # 2. 克隆GitHub仓库（需提前安装Git）
 def update_github():
@@ -237,17 +244,17 @@ def update_github():
         os.system(f"git clone {repo_url} {repo_dir}")
 
     os.chdir(repo_dir)
-    os.system("git pull origin main")  # 拉取最新代码
+    #os.system("git pull")  # 拉取最新代码
 
     # 提交到GitHub
-    os.system('git add index.html')
-    os.system('git commit -m "Auto data update"')
-    os.system('git push origin main')
+    #os.system('git add .')
+    #os.system('git commit -m "Auto data update"')
+    threading.Thread(target=git_push).start()
 
 
 if __name__ == '__main__':
     # schedule.every(0.1).minutes.do(trace)
-    schedule.every().day.at("00:55").do(daily_task)
+    schedule.every().day.at("01:25").do(daily_task)
     # schedule.every().day.at("13:05").do(daily_task)
     # daily_task()
     while True:
