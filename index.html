@@ -1,48 +1,122 @@
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-<title>beautified tified report</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>è‚¡ç¥¨æ•°æ®åˆ†æ</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="./static/css/style.css">
 </head>
-<style type="text/css">
-    h1 {margin-left: 20px}
-    h2 {margin-left: 20px;
-        font-size: 19px;
-        font-weight: bold;
-        display: inline-block;
-        padding-left: 10px;
-        border-left: 5px solid #916dd5;}
-    h3 {margin-left: 20px}
-    h4 {margin-left: 20px;
-        margin-bottom: -5px}
-    table {margin-left: 20px;
-           margin-top: 5px;
-           margin-bottom: 5px}
-    p {margin-left: 20px}
-    a {margin-top: 200px;}
-    </style>
-<h1>»ù½ğ²ßÂÔ»Ø²â±¨¸æ</h1>
 <body>
-<h2>Ò»¡¢²ßÂÔÏêÇé</h2>
-<p>²ßÂÔÃèÊö£º</p>
-<p>»Ø²âÊ±¼ä¶Î£º -->  </p>
-<p>³õÊ¼±¾½ğ£º</p>
+    <div class="container">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">è‚¡ç¥¨æ•°æ®åˆ†æ</h5>
+                <div>
+                    <button class="btn btn-sm btn-light" id="resetFilters">
+                        <i class="bi bi-arrow-counterclockwise"></i> é‡ç½®ç­›é€‰
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <!-- ç­›é€‰åŒºåŸŸ -->
+                <div class="filter-container">
+                    <div class="row">
+                        <div class="col-md-3 col-6 filter-group">
+                            <label class="form-label">å¸‚å€¼èŒƒå›´</label>
+                            <select class="form-select form-select-sm" id="marketCapFilter">
+                                <option value="">å…¨éƒ¨</option>
+                                <option value="0-50">å°äº50äº¿</option>
+                                <option value="50-100">50-100äº¿</option>
+                                <option value="100-500">100-500äº¿</option>
+                                <option value="500-1000">500-1000äº¿</option>
+                                <option value="1000-">å¤§äº1000äº¿</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 col-6 filter-group">
+                            <label class="form-label">ROEèŒƒå›´</label>
+                            <select class="form-select form-select-sm" id="roeFilter">
+                                <option value="">å…¨éƒ¨</option>
+                                <option value="0-5">0-5%</option>
+                                <option value="5-10">5-10%</option>
+                                <option value="10-15">10-15%</option>
+                                <option value="15-20">15-20%</option>
+                                <option value="20-">å¤§äº20%</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 col-6 filter-group">
+                            <label class="form-label">å¸‚ç›ˆç‡</label>
+                            <select class="form-select form-select-sm" id="peFilter">
+                                <option value="">å…¨éƒ¨</option>
+                                <option value="0-10">0-10</option>
+                                <option value="10-20">10-20</option>
+                                <option value="20-30">20-30</option>
+                                <option value="30-50">30-50</option>
+                                <option value="50-">å¤§äº50</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 col-6 filter-group">
+                            <label class="form-label">æ¶¨è·Œå¹…</label>
+                            <select class="form-select form-select-sm" id="changeFilter">
+                                <option value="">å…¨éƒ¨</option>
+                                <option value="up">ä¸Šæ¶¨</option>
+                                <option value="down">ä¸‹è·Œ</option>
+                                <option value="0-5">0-5%</option>
+                                <option value="5-10">5-10%</option>
+                                <option value="10-">å¤§äº10%</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <label class="form-label">å¿«é€Ÿç­›é€‰</label>
+                            <div>
+                                <span class="badge rounded-pill bg-primary badge-filter" data-filter="pe|0-20">ä½å¸‚ç›ˆç‡</span>
+                                <span class="badge rounded-pill bg-success badge-filter" data-filter="roe|10-">é«˜ROE</span>
+                                <span class="badge rounded-pill bg-danger badge-filter" data-filter="change|up">ä¸Šæ¶¨è‚¡</span>
+                                <span class="badge rounded-pill bg-warning text-dark badge-filter" data-filter="market_cap|500-">å¤§ç›˜è‚¡</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- æ•°æ®è¡¨æ ¼ -->
+                <div class="table-responsive">
+                    <table class="table table-hover" id="stockTable">
+                        <thead>
+                            <tr>
+                                <th class="sortable" data-sort="code">è‚¡ç¥¨ä»£ç </th>
+                                <th class="sortable" data-sort="name">è‚¡ç¥¨åç§°</th>
+                                <th class="sortable mobile-hidden" data-sort="market_cap">å¸‚å€¼(äº¿)</th>
+                                <th class="sortable" data-sort="roe">ROE(%)</th>
+                                <th class="sortable mobile-hidden" data-sort="net_profit">æ‰£éå‡€åˆ©æ¶¦(äº¿)</th>
+                                <th class="sortable mobile-hidden" data-sort="gross_margin">æ¯›åˆ©ç‡(%)</th>
+                                <th class="sortable" data-sort="pe">å¸‚ç›ˆç‡</th>
+                                <th class="sortable" data-sort="pb">å¸‚å‡€ç‡</th>
+                                <th class="sortable" data-sort="change">æ¶¨è·Œå¹…(%)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- åˆ†é¡µ -->
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div class="text-muted" id="resultCount">å…± 0 æ¡æ•°æ®</div>
+                    <nav>
+                        <ul class="pagination pagination-sm" id="pagination">
+                            <!-- åˆ†é¡µå°†é€šè¿‡JSåŠ¨æ€ç”Ÿæˆ -->
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./static/js/script.js"></script>
 </body>
 </html>
-
-<h2>¶ş¡¢»Ø²â½á¹û</h2>
-
-<table
-    border="1" width = "40%" cellspacing='0' cellpadding='0'>
-<tr>
-<th>»ù½ğÃû³Æ</th>
-<th>×ÜÍ¶Èë±¾½ğ</th>
-<th>×ÜÊÕÒæÂÊ</th>
-<th>×î´ó»Ø²âÂÊ</th>
-</tr>
-
-
-
-
-</table>
-
-<a name=""> <img src="" width="850"></a>

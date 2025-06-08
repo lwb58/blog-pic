@@ -198,14 +198,14 @@ def save_html(df_sorted):
         summary_stats=df.describe().to_html()
     )
 
-    with open("../index.html", "w") as f:
+    with open("../index.html", "w",encoding='utf-8') as f:
         f.write(html)
     update_github()
 
 
 # 1. 你的数据获取逻辑（替换为实际代码）
 def fetch_data():
-    return {"timestamp": datetime.now().isoformat(), "value": 42}
+    return {"timestamp": datetime.datetime.isoformat(), "value": 42}
 
 
 # 2. 克隆GitHub仓库（需提前安装Git）
@@ -218,11 +218,6 @@ def update_github():
 
     os.chdir(repo_dir)
     os.system("git pull origin main")  # 拉取最新代码
-
-    # 更新数据文件
-    data = fetch_data()
-    with open("data/latest.json", "w") as f:
-        json.dump(data, f)
 
     # 提交到GitHub
     os.system('git add data/latest.json')
