@@ -1,4 +1,4 @@
-import pandas as pd
+﻿import pandas as pd
 import redis
 from contextlib import contextmanager
 import datetime
@@ -66,7 +66,7 @@ def get_previous_trading_day(current_date: datetime.date) -> datetime.date:
     """获取前一个交易日"""
     # 这里需要实现获取真实交易日的逻辑
     # 简化版：如果是周一，返回上周五，否则返回前一天
-    return current_date - datetime.timedelta(days=2)
+    return current_date - datetime.timedelta(days=3)
 
 
 def get_redis_data(target_date: datetime.date) -> Optional[Dict[str, Any]]:
@@ -231,7 +231,7 @@ def fetch_data():
 # 2. 克隆GitHub仓库（需提前安装Git）
 def update_github():
     repo_url = "https://github.com/lwb58/blog-pic.git"
-    repo_dir = "D:\\code\\blog-pic"
+    repo_dir = "C:\\code\\blog-pic"
 
     if not os.path.exists(repo_dir):
         os.system(f"git clone {repo_url} {repo_dir}")
@@ -247,9 +247,9 @@ def update_github():
 
 if __name__ == '__main__':
     # schedule.every(0.1).minutes.do(trace)
-    #schedule.every().day.at("09:28").do(daily_task)
+    schedule.every().day.at("00:55").do(daily_task)
     # schedule.every().day.at("13:05").do(daily_task)
-    daily_task()
-    # while True:
-    #     schedule.run_pending()
-    #     time.sleep(30)
+    # daily_task()
+    while True:
+        schedule.run_pending()
+        time.sleep(30)
