@@ -66,7 +66,7 @@ def get_previous_trading_day(current_date: datetime.date) -> datetime.date:
     """获取前一个交易日"""
     # 这里需要实现获取真实交易日的逻辑
     # 简化版：如果是周一，返回上周五，否则返回前一天
-    return current_date - datetime.timedelta(days=2)
+    return current_date - datetime.timedelta(days=3)
 
 
 def get_redis_data(target_date: datetime.date) -> Optional[Dict[str, Any]]:
@@ -185,13 +185,16 @@ def prepare_data(df):
     df = df.rename(columns={
         'na': 'na',  # 股票名称
         'co': 'co',  # 股票代码
+        '公告日': 'pubdate',
+        '涨幅': 'change',
+        '次日': 'nextDate',
         '市值': 'market_cap',
         'ROE': 'roe',
         '扣非归母净利润': 'net_profit',
         '毛利率': 'gross_margin',
         '市盈率(pe)': 'pe',
         '市净率(pb)': 'pb',
-        '涨幅': 'change'
+        '至今涨幅': 'zjzf',
     })
     df = df.reset_index().rename(columns={'index': 'co'})
     # 确保数值字段为float类型
@@ -244,9 +247,9 @@ def update_github():
 
 if __name__ == '__main__':
     # schedule.every(0.1).minutes.do(trace)
-    schedule.every().day.at("09:28").do(daily_task)
+    #schedule.every().day.at("09:28").do(daily_task)
     # schedule.every().day.at("13:05").do(daily_task)
-    # daily_task()
-    while True:
-        schedule.run_pending()
-        time.sleep(30)
+    daily_task()
+    # while True:
+    #     schedule.run_pending()
+    #     time.sleep(30)

@@ -86,36 +86,70 @@
                     <table class="table table-hover" id="stockTable">
                         <thead>
                             <tr>
-                                <th class="sortable" data-sort="code">股票代码</th>
-                                <th class="sortable" data-sort="name">股票名称</th>
+                                <th class="sortable" data-sort="co">股票代码</th>
+                                <th class="sortable" data-sort="na">股票名称</th>
+                                <th class="sortable" data-sort="pubdate">公告日</th>
+                                <th class="sortable" data-sort="nextDate">次日</th>
+                                <th class="sortable" data-sort="change">涨跌幅(%)</th>
                                 <th class="sortable mobile-hidden" data-sort="market_cap">市值(亿)</th>
                                 <th class="sortable" data-sort="roe">ROE(%)</th>
                                 <th class="sortable mobile-hidden" data-sort="net_profit">扣非净利润(亿)</th>
                                 <th class="sortable mobile-hidden" data-sort="gross_margin">毛利率(%)</th>
                                 <th class="sortable" data-sort="pe">市盈率</th>
                                 <th class="sortable" data-sort="pb">市净率</th>
-                                <th class="sortable" data-sort="change">涨跌幅(%)</th>
+                                <th class="sortable" data-sort="zjzf">至今涨幅</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for stock in stocks %}
-                            <tr data-code="{{ stock.co }}"
+                            <tr data-co="{{ stock.co }}"
+                                data-na="{{ stock.na }}"
+                                data-pubdate="{{ stock.pubdate }}"
+                                data-nextDate="{{ stock.nextDate }}"
+                                data-change="{{ stock.change }}"
                                 data-market_cap="{{ stock.market_cap }}"
                                 data-roe="{{ stock.roe }}"
                                 data-net_profit="{{ stock.net_profit }}"
                                 data-gross_margin="{{ stock.gross_margin }}"
                                 data-pe="{{ stock.pe }}"
                                 data-pb="{{ stock.pb }}"
-                                data-change="{{ stock.change }}">
+                                data-zjzf="{{ stock.zjzf }}">
+                                <!-- 股票代码 -->
                                 <td>{{ stock.co }}</td>
+                                <!-- 股票名称 -->
                                 <td>{{ stock.na }}</td>
-                                <td class="mobile-hidden">{{ "%.2f"|format(stock.market_cap) }}</td>
-                                <td class="{{ 'positive' if stock.roe > 0 else 'negative' }}">{{ "%.2f"|format(stock.roe) }}</td>
-                                <td class="mobile-hidden">{{ "%.2f"|format(stock.net_profit) }}</td>
-                                <td class="mobile-hidden">{{ "%.2f"|format(stock.gross_margin) if stock.gross_margin is not none else '-' }}</td>
+                                <!-- 公告日 -->
+                                <td>{{ stock.pubdate }}</td>
+                                  <!-- 次日 -->
+                                <td>{{ stock.nextDate }}</td>
+                                <!-- 涨跌幅 -->
+                                <td class="{{ 'positive' if stock.change > 0 else 'negative' }}">
+                                    {{ "%.2f"|format(stock.change) if stock.change is not none else '-' }}
+                                </td>
+                                <!-- 市值(亿) -->
+                                <td class="mobile-hidden">
+                                    {{ "%.2f"|format(stock.market_cap) if stock.market_cap is not none else '-' }}
+                                </td>
+                                <!-- ROE -->
+                                <td class="{{ 'positive' if stock.roe > 0 else 'negative' }}">
+                                    {{ "%.2f"|format(stock.roe) if stock.roe is not none else '-' }}
+                                </td>
+                                <!-- 扣非净利润 -->
+                                <td class="mobile-hidden">
+                                    {{ "%.2f"|format(stock.net_profit) if stock.net_profit is not none else '-' }}
+                                </td>
+                                <!-- 毛利率 -->
+                                <td class="mobile-hidden">
+                                    {{ "%.2f"|format(stock.gross_margin) if stock.gross_margin is not none else '-' }}
+                                </td>
+                                <!-- 市盈率 -->
                                 <td>{{ "%.2f"|format(stock.pe) if stock.pe is not none else '-' }}</td>
+                                <!-- 市净率 -->
                                 <td>{{ "%.2f"|format(stock.pb) if stock.pb is not none else '-' }}</td>
-                                <td class="{{ 'positive' if stock.change > 0 else 'negative' }}">{{ "%.2f"|format(stock.change) }}</td>
+                                <!-- 至今涨幅 -->
+                                <td class="{{ 'positive' if stock.zjzf > 0 else 'negative' }}">
+                                    {{ "%.2f"|format(stock.zjzf) if stock.zjzf is not none else '-' }}
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>
