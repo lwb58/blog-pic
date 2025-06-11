@@ -68,7 +68,7 @@ def get_previous_trading_day(current_date: datetime.date) -> datetime.date:
     """获取前一个交易日"""
     # 这里需要实现获取真实交易日的逻辑
     # 简化版：如果是周一，返回上周五，否则返回前一天
-    return current_date - datetime.timedelta(days=3)
+    return current_date - datetime.timedelta(days=2)
 
 
 def get_redis_data(target_date: datetime.date) -> Optional[Dict[str, Any]]:
@@ -258,7 +258,7 @@ def update_github():
 
 if __name__ == '__main__':
     # schedule.every(0.1).minutes.do(trace)
-    schedule.every().day.at("01:38").do(daily_task)
+    schedule.every().day.at("09:28").do(daily_task)
     # schedule.every().day.at("13:05").do(daily_task)
     # daily_task()
     while True:
